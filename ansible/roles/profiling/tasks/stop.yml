@@ -1,0 +1,17 @@
+---
+- name: Stop dstat
+  command:
+    argv:
+      - pkill
+      - -f
+      - dstat
+
+- include_role:
+    name: subjects
+  vars:
+    action: load_facts
+
+- name: Upload dstat CSV to S3
+  fetch:
+    src: /tmp/dstat.csv
+    dest: /tmp/results/{{ results_url }}

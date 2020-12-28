@@ -1,0 +1,5 @@
+---
+- name: Install Vector .rpm package from URL
+  yum:
+    name: "{{ rpm }}"
+    state: present

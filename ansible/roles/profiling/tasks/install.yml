@@ -1,0 +1,10 @@
+---
+- name: Ensure dstat is removed before installing
+  yum:
+    name: dstat
+    state: absent
+
+- name: Install dstat
+  yum:
+    name: dstat
+    state: present

@@ -1,0 +1,30 @@
+---
+- name: Setup the filebeat user
+  user:
+    name: filebeat
+    createhome: no
+    home: /opt/filebeat
+    shell: /usr/sbin/nologin
+
+- name: "Downloading Filebeat ({{ version }})"
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-{{ version }}-x86_64.rpm"
+    dest: /tmp/filebeat.rpm
+    mode: 0644
+
+- name: Install Filebeat
+  shell: rpm -i /tmp/filebeat.rpm
+
+- name: Remove Filebeat archive
+  file:
+    path: /tmp/filebeat.rpm
+    state: absent
+
+# This ensures that the process is not running. Each test is responsible
+# for starting and stopping the relevant services.
+- name: Ensure the filebeat service is stopped
+  systemd:
+    name: filebeat
+    daemon_reload: yes
+    enabled: no
+    state: stopped

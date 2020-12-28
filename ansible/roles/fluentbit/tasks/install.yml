@@ -1,0 +1,54 @@
+---
+- name: Setup the td-agent-bit user
+  user:
+    name: td-agent-bit
+    createhome: no
+    home: /opt/td-agent-bit
+    shell: /usr/sbin/nologin
+
+- name: Create the /etc/td-agent-bit directory
+  file:
+    path: /etc/td-agent-bit
+    state: directory
+
+- name: Create the /var/lib/td-agent-bit directory
+  file:
+    path: /var/lib/td-agent-bit
+    state: directory
+    owner: td-agent-bit
+    group: td-agent-bit
+    mode: 0700
+
+- name: Add td-agent-bit gpg key
+  shell: rpm --import https://packages.fluentbit.io/fluentbit.key
+
+- name: Add td-agent-bit yum repository
+  copy:
+    src: fluentbit.repo
+    dest: /etc/yum.repos.d/
+
+- name: Install td-agent-bit
+  yum:
+    name: td-agent-bit
+    state: present
+
+- name: Remove parsers.conf
+  file:
+    path: /etc/td-agent-bit/parsers.conf
+    state: absent
+
+- name: Install td-agent-bit daemon systemd script
+  copy:
+    src: td-agent-bit.service
+    dest: /etc/systemd/system/td-agent-bit.service
+    mode: 0644
+    remote_src: no
+
+# This ensures that the process is not running. Each test is responsible
+# for starting and stopping the relevant services.
+- name: Ensure the td-agent-bit service is stopped
+  systemd:
+    name: td-agent-bit
+    daemon_reload: yes
+    enabled: no
+    state: stopped

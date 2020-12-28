@@ -1,0 +1,5 @@
+---
+- name: Install java 1.8
+  yum:
+    name: java
+    state: present

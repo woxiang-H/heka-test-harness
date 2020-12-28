@@ -1,0 +1,15 @@
+[hekad-daemon]
+hekad_bin = "/opt/heka/bin/hekad"
+config = "/opt/heka/conf/hekad.toml"
+ticker_interval = 60
+min_alive_interval = 10
+# listen_ip
+listen_addr = "0.0.0.0:10001"
+# frontend ip
+heartbeat_collector_addr = "0.0.0.0:8080"
+log_base_dir = "/opt/heka/log_base_dir"
+log_directory = "/opt/heka/log"
+# addr in heartbeat request
+# addr_in_heartbeat = "0.0.0.0:10001"
+
+max_retries = 5

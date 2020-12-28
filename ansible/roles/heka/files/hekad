@@ -1,0 +1,67 @@
+#!/bin/sh
+#
+# /etc/init.d/heka
+# init script for heka.
+#
+# chkconfig: 2345 90 60
+#
+RETVAL=0
+
+COMMAND="hekad-daemon"
+CONFIG="/opt/heka/conf/hekad-daemon.toml"
+PIDFILE="/opt/heka/log/hekad-daemon.pid"
+
+heka_start() {
+  /bin/echo Starting heka...
+  /opt/heka/bin/${COMMAND} -config=${CONFIG} &
+  RETVAL=$?
+}
+heka_stop() {
+  /bin/echo Stopping heka...
+  if [ -f ${PIDFILE} ]; then
+    PID=$(/bin/cat $PIDFILE)
+    NAME=$(ps -p $PID -o comm=)
+    if [ "${NAME}" = "hekad-daemon" ]; then
+        /bin/kill ${PID}
+    fi
+  fi 
+  /bin/sleep 5
+  if [ -f ${PIDFILE} ]; then
+    /bin/rm ${PIDFILE}
+  fi
+  RETVAL=$?
+}
+heka_restart() {
+  /bin/echo Restarting heka...
+  if [ -f ${PIDFILE} ]; then
+    PID=$(/bin/cat $PIDFILE)
+    NAME=$(ps -p $PID -o comm=)
+    if [ "${NAME}" = "hekad-daemon" ]; then
+       /bin/kill ${PID}
+    fi
+  fi
+  /bin/sleep 5
+  if [ -f ${PIDFILE} ]; then
+    /bin/rm ${PIDFILE}
+  fi
+  /opt/heka/bin/${COMMAND} -config=${CONFIG} &
+  RETVAL=$?
+}
+
+case "$1" in
+  start)
+    heka_start
+    ;;
+  stop)
+    heka_stop
+    ;;
+  restart)
+    heka_restart
+    ;;
+  *)
+    /bin/echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit $RETVAL

@@ -1,0 +1,5 @@
+---
+- include_role:
+    name: splunk_universal_forwarder
+  vars:
+    action: configure

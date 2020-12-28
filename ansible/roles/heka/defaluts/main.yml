@@ -1,0 +1,4 @@
+---
+daemon_configuration_file: config_files/hekad-daemon.toml
+configuration_file: config_files/hekad.toml
+pipeline_file: config_files/hekad.toml.tcp

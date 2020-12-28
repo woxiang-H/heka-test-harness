@@ -1,0 +1,25 @@
+---
+- name: Create /opt/heka directory
+  file:
+    path: /opt/heka
+    state: directory
+
+- name: Copy heka.tar.gz file to remote machine
+  unarchive:
+    src: heka-3_6_0.4-linux-amd64.tar.gz
+    dest: /opt/heka
+    extra_opts:
+    - --strip-components=1
+
+- name: Copy hekad file to remote machine
+  copy:
+    src: hekad
+    dest: /etc/init.d/hekad
+    mode: 0755
+
+- name: Ensure the hekad service is stopped
+  systemd:
+    name: hekad
+    daemon_reload: yes
+    enabled: no
+    state: stopped

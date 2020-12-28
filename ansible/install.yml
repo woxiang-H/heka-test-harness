@@ -1,0 +1,24 @@
+---
+- hosts: '{{ test_namespace_consumer }}'
+  become: true
+  roles:
+    - role: tcp_test_server
+      action: install
+
+    - role: http_test_server
+      action: install
+
+    - role: logstash
+      action: install
+
+- hosts: '{{ test_namespace_subject }}'
+  become: true
+  roles:
+    - role: flog
+      action: install
+
+    - role: profiling
+      action: install
+
+    - role: subjects
+      action: install

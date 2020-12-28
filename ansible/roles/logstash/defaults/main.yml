@@ -1,0 +1,3 @@
+---
+configuration_file: config_files/logstash.settings.yml
+pipeline_file: config_files/logstash.pipeline.conf

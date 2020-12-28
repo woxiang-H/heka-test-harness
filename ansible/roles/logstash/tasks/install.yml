@@ -1,0 +1,31 @@
+---
+- include_role:
+    name: java8
+
+- name: Setup the logstash user
+  user:
+    name: logstash
+    createhome: no
+    home: /opt/logstash
+    shell: /usr/sbin/nologin
+
+- name: Create the /etc/logstash directory
+  file:
+    path: /etc/logstash/conf.d
+    state: directory
+
+- name: Add logstash apt-key
+  shell: rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: Add logstash yum repository
+  copy:
+    src: logstash.repo
+    dest: /etc/yum.repos.d/
+
+- name: Install logstash
+  yum:
+    name: logstash
+    state: present
+
+- name: Install logstash null output plugin
+  shell: /usr/share/logstash/bin/logstash-plugin install logstash-output-null

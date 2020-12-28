@@ -1,0 +1,35 @@
+---
+- name: Install Vector
+  when: vector_version is defined
+  block:
+    - name: Ensure vector is removed before installing
+      yum:
+        name: vector
+        state: absent
+
+    - name: Install Vector .rpm package from URL
+      when: vector_version is not regex('^dev-')
+      include: "install_rpm_from_url.yml"
+      vars:
+        rpm: https://packages.timber.io/vector/{{ vector_version }}/vector-x86_64.rpm
+
+    - name: Install Vector .rpm package from local file
+      when: vector_version is regex('^dev-')
+      include: "install_rpm_from_file.yml"
+      vars:
+        local_rpm: "{{ local_vector_deb_path }}"
+
+    - name: Ensure vector user is in docker group
+      user:
+        name: vector
+        groups: vector
+        append: yes
+
+    # This ensures that the process is not running. Each test is responsible
+    # for starting and stopping the relevant services.
+    - name: Ensure the vector service is stopped
+      systemd:
+        name: vector
+        daemon_reload: yes
+        enabled: no
+        state: stopped

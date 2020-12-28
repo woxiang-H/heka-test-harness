@@ -1,0 +1,6 @@
+---
+- name: Stop the heka systemd service
+  systemd:
+    name: hekad
+    daemon_reload: no
+    state: stopped

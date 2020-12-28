@@ -1,0 +1,54 @@
+###Other
+[1_counter_filter]
+type = "CounterFilter"
+message_matcher = "Type != 'heka.counter-output'"
+only_payload = true
+
+
+[1_log_encoder]
+type = "PayloadEncoder"
+
+[1_log_output]
+type = "LogOutput"
+message_matcher = "Type == 'heka.counter-output'"
+encoder = "1_log_encoder"
+
+[hekad]
+base_dir = "/opt/heka/cache/hekad"
+
+[1_file_decoder]
+type = "RizhiyiDecoder"
+appname = "rizhiyi_app"
+tag = "rizhiyi_tag"
+charset = "utf-8"
+[1_file_input]
+type = "LogstreamerInput"
+log_directory = "/tmp"
+file_match = '(?P<Path>.*\.log)'
+differentiator = ["1_file_input", "Path"]
+decoder = "1_file_decoder"
+disabled = false
+oldest_duration = "720h"
+read_interval = "1s"
+
+###Output
+
+#[RzyFramingSplitter]
+#
+#[RzyProtobufEncoder]
+#token = "87644362d6231a77d0373990fb61be74"
+#charset = ""
+#auto_conv = false
+#
+#[RzyHttpOutput]
+#message_matcher = "TRUE"
+#address = "http://192.168.1.14:80/proto/?compressed=false"
+#use_buffering = false
+#encoder = "RzyProtobufEncoder"
+#rate_limit = 0
+#[RzyHttpOutput.Buffering]
+#max_file_size = 268435456
+#max_buffer_size = 1073741824
+#full_action = "block"
+#cursor_update_count = 1000
+

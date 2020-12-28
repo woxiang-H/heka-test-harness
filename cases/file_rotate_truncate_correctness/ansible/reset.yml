@@ -1,0 +1,7 @@
+- hosts: '{{ test_namespace }}:&tag_TestRole_subject'
+  become: true
+  roles:
+    - role: subjects
+      action: reset
+    - role: test_servers
+      action: reset

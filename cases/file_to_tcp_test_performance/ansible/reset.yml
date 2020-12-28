@@ -1,0 +1,13 @@
+- hosts: '{{ test_namespace_subject }}'
+  become: true
+  roles:
+    - role: subjects
+      action: reset
+
+- hosts: '{{ test_namespace_consumer }}'
+  become: true
+  roles:
+    - role: logstash
+      action: reset
+    - role: tcp_test_server
+      action: reset

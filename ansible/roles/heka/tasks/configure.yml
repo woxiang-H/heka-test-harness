@@ -1,0 +1,15 @@
+---
+- name: Install Heka-daemon settings configuration
+  template:
+    src: "{{ daemon_configuration_file }}"
+    dest: /opt/heka/conf/hekad-daemon.toml
+    mode: 0644
+  when: daemon_configuration_file != ""
+
+- name: Install Heka settings configuration
+  template:
+    src: "{{ configuration_file }}"
+    dest: /opt/heka/conf/hekad.toml
+    mode: 0644
+  when: configuration_file != ""
+

@@ -1,0 +1,67 @@
+---
+- hosts: '{{ test_namespace }}'
+  tasks:
+    - meta: refresh_inventory
+    - name: Wait 600 seconds for target connection to become reachable/usable
+      wait_for_connection:
+
+    - debug:
+        var: playbook_dir
+
+
+- hosts: '{{ test_namespace_subject }}'
+  become: true
+  roles:
+    - role: heka
+      action: configure
+      daemon_configuration_file: "config_files/hekad-daemon.toml"
+      configuration_file: "config_files/hekad.toml"
+      message_matcher: "FALSE"
+
+    - role: filebeat
+      action: configure
+
+    - role: fluentbit
+      action: configure
+
+    - role: fluentd
+      action: configure
+
+    - role: logstash
+      action: configure
+      configuration_file: "config_files/logstash.subject.settings.yml"
+      pipeline_file: "config_files/logstash.subject.pipeline.conf"
+
+    - role: splunk_heavy_forwarder
+      action: configure
+
+    - role: splunk_universal_forwarder
+      action: configure
+
+    - role: vector
+      action: configure
+
+  tasks:
+    - name: "Create {{ test_file_count }} test log files"
+      include_role:
+        name: flog
+      vars:
+        action: create_test_file
+        bytes: "{{ test_file_bytes }}"
+        location: "{{ test_files_root }}{{ item }}.log"
+        encoding: text
+      with_sequence: count={{ test_file_count }}
+
+- hosts: '{{ test_namespace_consumer }}'
+  become: true
+  roles:
+    - role: tcp_test_server
+      action: configure
+      address: "0.0.0.0:{{ consumer_port }}"
+
+#     # We install logstash as a consumer since Filebeat has limited output
+#     # support. Unsurprisingly, it does not support generic HTTP or TCP outputs
+#     # and implements a proprietary "Lumberjack Protocol". To s
+    - role: logstash
+      action: configure
+      pipeline_file: "config_files/logstash.consumer.pipeline.conf"
