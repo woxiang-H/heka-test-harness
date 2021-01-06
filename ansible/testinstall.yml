@@ -1,0 +1,6 @@
+- hosts: '{{ test_namespace_subject }}'
+  become: true
+  roles:
+    - role: vector
+      action: install
+

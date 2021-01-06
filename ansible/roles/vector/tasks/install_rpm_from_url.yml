@@ -1,5 +1,7 @@
 ---
+- name: Add vector repo
+  shell: curl -1sLf 'https://repositories.timber.io/public/vector/cfg/setup/bash.rpm.sh'| sudo -E bash
 - name: Install Vector .rpm package from URL
   yum:
-    name: "{{ rpm }}"
+    name: vector
     state: present
