@@ -4,9 +4,9 @@
     path: /opt/heka
     state: directory
 
-- name: Copy heka.tar.gz file to remote machine
+- name: Copy heka-{{ version }}-linux-amd64.tar.gz file to remote machine
   unarchive:
-    src: heka-3_6_0.4-linux-amd64.tar.gz
+    src: heka-{{ version }}-linux-amd64.tar.gz
     dest: /opt/heka
     extra_opts:
     - --strip-components=1
