@@ -358,6 +358,12 @@ Done!
 
 To see results, run:
 
-  bin/compare -t $TEST_NAME -c $TEST_CONFIGURATION
+  $VECTOR_TEST_HARNESS_UTILS_DIR/compared /tmp/results/${TEST_NAME}/${TEST_CONFIGURATION}/${TEST_TIMESTAMP}
 
 END
+if [ "$RUN" == 'true' ]
+then
+    $VECTOR_TEST_HARNESS_UTILS_DIR/compared /tmp/results/${TEST_NAME}/${TEST_CONFIGURATION}/${TEST_TIMESTAMP}
+fi
+
+print_divider

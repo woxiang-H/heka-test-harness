@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+import os, sys
+import pandas as pd
+import tabulate
+
+def list_dir(file_dir):
+    dir_list = os.listdir(file_dir)
+    for cur_file in dir_list:
+        path = os.path.join(file_dir,cur_file)
+        if os.path.isfile(path):
+            dir_files = os.path.join(file_dir, cur_file)
+        if os.path.splitext(path)[1] == '.csv':
+            csv_file = os.path.join(file_dir, cur_file)
+            list_csv.append(csv_file)
+        if os.path.isdir(path):
+            list_dir(path)
+
+def hum_convert(value):
+    units = ["B", "KB", "MB", "GB", "TB", "PB"]
+    size = 1024.0
+    for i in range(len(units)):
+        if (value / size) < 1: 
+            return "%.2f%s" % (value, units[i])
+        value = value / size
+
+def build_short_subject_name(name):
+    if name == 'splunk_heavy_forwarder':
+        return 'splunk_hf'
+    elif name == 'splunk_universal_forwarder':
+        return 'splunk_uf'
+    else:
+        return name
+
+def deal_csv(file_csv):
+    df = pd.read_csv(file_csv, header=5)
+    duration = format(df["epoch"].max() - df["epoch"].min(), '.0f')+'s'
+    cpu_sys_avg = df["sys"].mean()
+    cpu_usr_avg = df["usr"].mean()
+    cpu_sys_max = df["sys"].max()
+    cpu_usr_max = df["usr"].max()
+    load_avg_1m = format(df["1m"].mean(), '.2f')
+    mem_used_avg = hum_convert(df["used"].mean())
+    mem_used_max = hum_convert(df["used"].max())
+    disk_read_avg = hum_convert(df["read"].mean())+"/s"
+    disk_read_sum = hum_convert(df["read"].sum())
+    disk_writ_sum = hum_convert(df["writ"].sum())
+    io_read_avg = format(df["read.1"].mean(), '.2f')
+    io_read_sum = df["read.1"].sum()
+    io_writ_sum = df["writ.1"].sum()
+    net_recv_avg = hum_convert(df["recv"].mean())
+    net_recv_sum = hum_convert(df["recv"].sum())
+    net_send_sum = hum_convert(df["send"].sum())
+    sock_total_sum = df["tot"].sum()
+    tcp_act_avg = format(df["act"].mean(), '.2f')
+    tcp_syn_avg = format(df["syn"].mean(), '.2f')
+    tcp_clo_avg = format(df["clo"].mean(), '.2f')
+
+    return [disk_read_avg, io_read_avg, duration, cpu_sys_max, cpu_usr_max, load_avg_1m, mem_used_max, disk_read_sum, disk_writ_sum, net_recv_sum, net_send_sum, tcp_act_avg, tcp_syn_avg, tcp_clo_avg]
+
+if __name__ == "__main__":
+    paths = sys.argv[1]
+    list_subject = os.listdir(paths)
+    data_csv = []
+    for subject in list_subject:
+#        print(subject)
+        list_csv = []
+        list_dir(os.path.join(paths, subject))
+        results = deal_csv(list_csv[0])
+        subject = build_short_subject_name(subject)
+        results.insert(0, subject)
+        data_csv.append(results)
+    namecsv = ["Metric", "Disk Thrpt (avg)", "Io Thrpt (avg)", "Duration", "CPU sys (max)", "CPU usr (max)", "Load 1m (avg)", "Mem used (max)", "Disk read (sum)", "Disk writ (sum)", "Net recv (sum)", "Net send (sum)", "TCP estab (avg)", "TCP sync (avg)", "TCP close (avg)"]
+#    rendered = tabulate.tabulate(data_csv, headers=namecsv, tablefmt="pipe", numalign="right", stralign="right")
+#    print(rendered + "\n")
+    data=list(map(list, zip(*data_csv)))
+    data=pd.DataFrame(data, index=namecsv)
+    newrend = tabulate.tabulate(data, headers="firstrow", tablefmt="pipe", numalign="left", stralign="left")
+    print(newrend + "\n")
+

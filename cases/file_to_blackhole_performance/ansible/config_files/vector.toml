@@ -4,8 +4,6 @@
   start_at_beginning = true
 
 [sinks.out]
-  inputs  = ["in"]
-  type    = "socket"
-  mode    = "tcp"
-  encoding.codec = "text"
-  address = "{{ consumer_ip }}:{{ consumer_port }}"
+  inputs       = ["in"]
+  type         = "blackhole"
+  print_amount = 10000
