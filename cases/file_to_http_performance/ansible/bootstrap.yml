@@ -44,6 +44,7 @@
 
     - role: heka
       action: install
+      version: "{{ preinstalled_heka_version }}"
 
     - role: heka
       action: configure
