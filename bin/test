@@ -18,7 +18,7 @@ DESCRIPTION
 
 OPTIONS
    -b, --bootstrap-only  Bootstrap the test only, do not test any subjects
-   -i, --install    Install the test need only, Initialize the environment.
+   -i, --install         Install the test subject, Initialize the environment.
    -r, --run-only        Don't run the bootstrap task, just run the test. This is helpful for repeated runs.
        --skip-terraform  Skip all terraform commands. This is helpful for repeated runs.
    -c, --configuration   The test configuration (default: default, env: VECTOR_TEST_CONFIGURATION)
@@ -55,7 +55,7 @@ INSTALL='false'
 # SKIP_TERRAFORM='false'
 
 # Required from the environment.
-TEST_RESULTS_S3_BUCKET_NAME="${VECTOR_TEST_RESULTS_S3_BUCKET_NAME:-""}"
+# TEST_RESULTS_S3_BUCKET_NAME="${VECTOR_TEST_RESULTS_S3_BUCKET_NAME:-""}"
 TEST_SSH_PUBLIC_KEY="${VECTOR_TEST_SSH_PUBLIC_KEY:-""}"
 TEST_TIMESTAMP="${VECTOR_TEST_TIMESTAMP:-"$(date -u +%s)"}"
 TEST_VECTOR_DEB_PATH="${VECTOR_TEST_VECTOR_DEB_PATH:-""}"
@@ -181,7 +181,6 @@ User ID: $TEST_USER_ID
 Test name: $TEST_NAME
 Test configuration: $TEST_CONFIGURATION
 Test timestamp: $TEST_TIMESTAMP
-Test results S3 bucket name: $TEST_RESULTS_S3_BUCKET_NAME
 END
 if [[ -n "$TEST_SUBJECT" ]]; then
   echo "Test subject: $TEST_SUBJECT"
@@ -255,9 +254,7 @@ test_configuration=$TEST_CONFIGURATION \
 test_namespace="${TEST_NAMESPACE}" \
 test_namespace_subject=${TEST_NAMESPACE}_subject \
 test_namespace_consumer=${TEST_NAMESPACE}_consumer \
-test_timestamp=$TEST_TIMESTAMP \
-user_id=$TEST_USER_ID \
-results_s3_bucket_name=$TEST_RESULTS_S3_BUCKET_NAME"
+test_timestamp=${TEST_TIMESTAMP}"
 
 ANSIBLE_COMMON_ARGS_ARRAY=(
   -u root

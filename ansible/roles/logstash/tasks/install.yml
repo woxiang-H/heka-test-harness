@@ -28,4 +28,4 @@
     state: present
 
 - name: Install logstash null output plugin
-  shell: /usr/share/logstash/bin/logstash-plugin install logstash-output-null
+  shell: /usr/share/logstash/bin/logstash-plugin install --no-verify logstash-output-null
