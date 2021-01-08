@@ -69,7 +69,7 @@ if __name__ == "__main__":
         subject = build_short_subject_name(subject)
         results.insert(0, subject)
         data_csv.append(results)
-    namecsv = ["Metric", "Disk Thrpt (avg)", "Io Thrpt (avg)", "Duration", "CPU sys (max)", "CPU usr (max)", "Load 1m (avg)", "Mem used (max)", "Disk read (sum)", "Disk writ (sum)", "Net recv (sum)", "Net send (sum)", "TCP estab (avg)", "TCP sync (avg)", "TCP close (avg)"]
+    namecsv = ["Metric", "Disk Thrpt (avg)", "IO Thrpt (avg)", "Duration", "CPU sys (max)", "CPU usr (max)", "Load 1m (avg)", "Mem used (max)", "Disk read (sum)", "Disk writ (sum)", "Net recv (sum)", "Net send (sum)", "TCP estab (avg)", "TCP sync (avg)", "TCP close (avg)"]
 #    rendered = tabulate.tabulate(data_csv, headers=namecsv, tablefmt="pipe", numalign="right", stralign="right")
 #    print(rendered + "\n")
     data=list(map(list, zip(*data_csv)))

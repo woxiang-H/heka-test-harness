@@ -32,6 +32,10 @@
       vars:
         action: start
 
+    - name: Wait 5 seconds for {{ test_subject }} to initialize and warmup
+      pause:
+        seconds: 5
+
     - name: Start profiling {{ test_subject }}
       include_role:
         name: profiling

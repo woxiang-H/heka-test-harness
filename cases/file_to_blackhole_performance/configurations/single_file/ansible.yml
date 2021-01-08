@@ -1,5 +1,5 @@
 ---
 consumer_port: 9000
 test_file_count: 1
-test_file_bytes: 10240000000 # 10gib
+test_file_bytes: 6144000000 # 10gib
 test_files_root: /tmp/flog
