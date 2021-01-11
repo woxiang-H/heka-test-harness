@@ -34,6 +34,11 @@
       pause:
         seconds: 15
 
+    - name: Wait 60 seconds for {{ test_subject }} to initialize and warmup
+      pause:
+        seconds: 60
+      when: test_subject == 'logstash'
+
     - name: Start profiling {{ test_subject }}
       include_role:
         name: profiling
