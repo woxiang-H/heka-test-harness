@@ -7,5 +7,9 @@
 - hosts: '{{ test_namespace_consumer }}'
   become: true
   roles:
+    - role: logstash
+      action: reset
+    - role: heka
+      action: reset
     - role: http_test_server
       action: reset

@@ -50,3 +50,7 @@
       action: configure
       configuration_file: "config_files/hekad-http.toml"
       message_matcher: "FALSE"
+
+    - role: logstash
+      action: configure
+      pipeline_file: "config_files/logstash.consumer.pipeline.conf"

@@ -5,7 +5,7 @@
   become: true
   tasks:
     - set_fact:
-        consumer_role: "{% if test_subject=='heka' %}heka{% else %}http_test_server{% endif %}"
+        consumer_role: "{% if test_subject=='heka' %}heka{% elif test_subject=='logstash' %}logstash{% else %}http_test_server{% endif %}"
 
 - hosts: '{{ test_namespace_consumer }}'
   become: true
@@ -35,6 +35,11 @@
     - name: Wait 5 seconds for {{ test_subject }} to initialize and warmup
       pause:
         seconds: 5
+
+    - name: Wait 60 seconds for {{ test_subject }} to initialize and warmup
+      pause:
+        seconds: 60
+      when: test_subject == 'logstash'
 
     - name: Start profiling {{ test_subject }}
       include_role:
