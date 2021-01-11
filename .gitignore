@@ -10,3 +10,4 @@
 .env
 .terraform
 tmp/
+ansible/roles/heka/files/heka-3_6_0.4-linux-amd64.tar.gz
