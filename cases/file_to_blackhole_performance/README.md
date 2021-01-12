@@ -1,4 +1,4 @@
-# TCP To Blackhole Performance Test
+# Flie To Blackhole Performance Test
 
 This test measures the raw internal performance of the subject by configuring it to
 simply discard incoming data. Most subject include a "blackhole" or "null" output
@@ -41,7 +41,7 @@ vector = 0.2.0-6-g434bed8
 ## Try It
 
 ```bash
-bin/test -t tcp_to_blackhole_performance
+bin/test -t tcp_to_blackhole_performance -c single_file
 ```
 
 ## Resources
