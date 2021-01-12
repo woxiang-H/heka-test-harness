@@ -6,15 +6,15 @@ for this purposes.
 
 ## Design
 
-1. Each subjects is configured to receive data over TCP and discard it.
-2. The TCP producer is a separate instance to help ensure performance is not tainted.
+1. Each subjects is configured to tail a single glob pattern and discard it.
+2. This test contains 2 separate configurations: multi_file and single_file to test the performance of both. The multi_file configuration simply creates 10 files.
 3. Each subject is started and ran for 60 seconds.
-4. [Performance data][performance_data] is collected and persisted to S3 for analysis.
+4. [Performance data][performance_data] is collected and persisted to csv for analysis.
 
 ## Results
 
 ```
-$ bin/compare -t tcp_to_blackhole_performance
+$ bin/test -t file_to_blackhole_performance -c single_file
 
 | Metric          | fluentbit | fluentd   | logstash  | vector    |
 |:----------------|:----------|:----------|:----------|:----------|
@@ -41,7 +41,7 @@ vector = 0.2.0-6-g434bed8
 ## Try It
 
 ```bash
-bin/test -t tcp_to_blackhole_performance -c single_file
+bin/test -t file_to_blackhole_performance -c single_file
 ```
 
 ## Resources
