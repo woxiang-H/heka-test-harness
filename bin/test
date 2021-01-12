@@ -11,7 +11,7 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)/../lib/vec
 
 register_usage <<END
 USAGE
-   test -t test [-c configuration] [-s subjects] [-u user-id] [{-b|-r}]
+   test -t test [-c configuration] [-s subjects] [-u user-id] [{-i|-b|-r}]
 
 DESCRIPTION
    Runs and profiles the provided case, uploading the results to S3.
