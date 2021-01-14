@@ -1,0 +1,6 @@
+---
+- name: Start the rizhiyi-agent systemd service
+  systemd:
+    name: rizhiyi-agent
+    daemon_reload: no
+    state: started

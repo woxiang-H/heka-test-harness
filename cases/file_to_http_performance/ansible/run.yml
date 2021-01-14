@@ -5,7 +5,7 @@
   become: true
   tasks:
     - set_fact:
-        consumer_role: "{% if test_subject=='heka' %}heka{% elif test_subject=='logstash' %}logstash{% else %}http_test_server{% endif %}"
+        consumer_role: "{% if test_subject=='heka' %}heka{% elif test_subject=='aixagent' %}heka{% elif test_subject=='logstash' %}logstash{% else %}http_test_server{% endif %}"
 
 - hosts: '{{ test_namespace_consumer }}'
   become: true

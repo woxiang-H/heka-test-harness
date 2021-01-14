@@ -1,0 +1,15 @@
+---
+- name: Install Heka-daemon settings configuration
+  template:
+    src: "{{ daemon_configuration_file }}"
+    dest: /opt/rizhiyi-agent/conf/daemon.config
+    mode: 0644
+  when: daemon_configuration_file != ""
+
+- name: Install Heka settings configuration
+  template:
+    src: "{{ configuration_file }}"
+    dest: /opt/rizhiyi-agent/conf/forwarder.config
+    mode: 0644
+  when: configuration_file != ""
+

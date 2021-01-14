@@ -30,9 +30,9 @@
       vars:
         action: start
 
-    - name: Wait 15 seconds for {{ test_subject }} to initialize and warmup
+    - name: Wait 5 seconds for {{ test_subject }} to initialize and warmup
       pause:
-        seconds: 15
+        seconds: 5
 
     - name: Wait 60 seconds for {{ test_subject }} to initialize and warmup
       pause:

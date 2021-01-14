@@ -12,6 +12,9 @@
       action: configure
       message_matcher: "TRUE"
 
+    - role: aixagent
+      action: configure
+
     - role: fluentbit
       action: configure
 

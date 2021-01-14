@@ -1,8 +1,8 @@
 ---
-- include_role:
-    name: filebeat
-  vars:
-    action: reset
+# - include_role:
+#     name: filebeat
+#   vars:
+#     action: reset
 
 - include_role:
     name: fluentbit
@@ -31,5 +31,15 @@
 
 - include_role:
     name: vector
+  vars:
+    action: reset
+
+- include_role:
+    name: heka
+  vars:
+    action: reset
+
+- include_role:
+    name: aixagent
   vars:
     action: reset

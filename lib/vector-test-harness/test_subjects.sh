@@ -9,6 +9,7 @@ TEST_SUBJECT_NAMES=(
   splunk_heavy_forwarder
   splunk_universal_forwarder
   heka
+  aixagent
   vector
 )
 #  filebeat

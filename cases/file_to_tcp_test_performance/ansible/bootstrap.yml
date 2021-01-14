@@ -12,12 +12,6 @@
 - hosts: '{{ test_namespace_subject }}'
   become: true
   roles:
-    - role: heka
-      action: configure
-      daemon_configuration_file: "config_files/hekad-daemon.toml"
-      configuration_file: "config_files/hekad.toml"
-      message_matcher: "FALSE"
-
     - role: filebeat
       action: configure
 

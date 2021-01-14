@@ -1,0 +1,28 @@
+---
+- include_role:
+    name: java8
+
+- name: Create /opt/rizhiyi-agent directory
+  file:
+    path: /opt/rizhiyi-agent
+    state: directory
+
+- name: Copy rizhiyi-agent-{{ version }}.tar.gz file to remote machine
+  unarchive:
+    src: rizhiyi-agent-{{ version }}.tar.gz
+    dest: /opt/rizhiyi-agent
+    extra_opts:
+    - --strip-components=1
+
+- name: Copy rizhiyi-agent file to remote machine
+  copy:
+    src: rizhiyi-agent
+    dest: /etc/init.d/rizhiyi-agent
+    mode: 0755
+
+- name: Ensure the rizhiyi-agent service is stopped
+  systemd:
+    name: rizhiyi-agent
+    daemon_reload: yes
+    enabled: no
+    state: stopped

@@ -1,0 +1,3 @@
+---
+daemon_configuration_file: config_files/daemon.config
+configuration_file: config_files/forwarder.config
