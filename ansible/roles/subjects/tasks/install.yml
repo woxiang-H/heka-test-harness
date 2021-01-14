@@ -17,11 +17,11 @@
     action: install
     version: "{{ preinstalled_vector_version }}"
 
-# - include_role:
-#     name: filebeat
-#   vars:
-#     action: install
-#     version: "{{ preinstalled_filebeat_version }}"
+- include_role:
+    name: filebeat
+  vars:
+    action: install
+    version: "{{ preinstalled_filebeat_version }}"
 
 - include_role:
     name: fluentbit

@@ -1,8 +1,8 @@
 ---
-# - include_role:
-#     name: filebeat
-#   vars:
-#     action: reset
+- include_role:
+    name: filebeat
+  vars:
+    action: reset
 
 - include_role:
     name: fluentbit
