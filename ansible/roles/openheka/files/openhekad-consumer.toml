@@ -1,0 +1,2 @@
+[TcpInput]
+address = ":{{ consumer_port }}"

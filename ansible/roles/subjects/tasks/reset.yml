@@ -40,6 +40,11 @@
     action: reset
 
 - include_role:
+    name: openheka
+  vars:
+    action: reset
+
+- include_role:
     name: aixagent
   vars:
     action: reset

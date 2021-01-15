@@ -6,6 +6,12 @@
     version: "{{ preinstalled_heka_version }}"
 
 - include_role:
+    name: openheka
+  vars:
+    action: install
+    version: "{{ preinstalled_openheka_version }}"
+
+- include_role:
     name: aixagent
   vars:
     action: install

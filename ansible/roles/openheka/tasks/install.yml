@@ -1,0 +1,27 @@
+---
+- name: Downloading heka-{{ version }}-linux-amd64.rpm file to remote machine
+  get_url:
+    url: "https://github.com/mozilla-services/heka/releases/download/v0.10.0/heka-{{ version }}-linux-amd64.rpm"
+    dest: /tmp/openheka.rpm
+    mode: 0644
+
+- name: Install openheka
+  shell: rpm -i /tmp/openheka.rpm --replacepkgs
+
+- name: Remove openheka archive
+  file:
+    path: /tmp/openheka.rpm
+    state: absent
+
+- name: Copy openhekad file to remote machine
+  copy:
+    src: openhekad
+    dest: /etc/init.d/openhekad
+    mode: 0755
+
+- name: Ensure the openheka service is stopped
+  systemd:
+    name: openhekad
+    daemon_reload: yes
+    enabled: no
+    state: stopped

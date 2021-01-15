@@ -1,0 +1,13 @@
+[LogstreamerInput]
+log_directory = "/tmp"
+file_match = 'flog?(?P<Seq>\d*)\.log'
+priority = ["^Seq"]
+
+[PayloadEncoder]
+append_newlines = false
+
+[aggregator_output]
+type = "TcpOutput"
+address = "{{ consumer_ip }}:{{ consumer_port }}"
+local_address = "{{ subject_ip }}:12345"
+message_matcher = "TRUE"

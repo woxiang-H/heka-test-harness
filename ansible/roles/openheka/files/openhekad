@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# /etc/init.d/heka
+# init script for heka.
+#
+# chkconfig: 2345 90 60
+#
+RETVAL=0
+
+CONFIG="/etc/openhekad.toml"
+
+start() {
+  /bin/echo Starting openhekad...
+  nohup /usr/bin/hekad -config=$CONFIG & #> /dev/null 2>&1 &
+  RETVAL=$?
+}
+stop() {
+  /bin/echo Stopping openhekad...
+  kill  `ps -aef | grep '/usr/bin/hekad' | grep -v grep | awk '{print $2}'`
+  RETVAL=$?
+}
+restart() {
+  stop
+  start
+  RETVAL=$?
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    restart
+    ;;
+  *)
+    /bin/echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+
+exit $RETVAL
