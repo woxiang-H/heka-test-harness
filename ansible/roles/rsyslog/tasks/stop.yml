@@ -1,0 +1,6 @@
+---
+- name: Stop the rsyslog systemd service
+  systemd:
+    name: rsyslog
+    daemon_reload: no
+    state: stopped

@@ -1,0 +1,6 @@
+---
+- name: Stop the syslog-ng systemd service
+  systemd: 
+    name: syslog-ng
+    daemon_reload: no
+    state: stopped

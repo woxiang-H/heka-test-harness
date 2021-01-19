@@ -11,6 +11,8 @@ TEST_SUBJECT_NAMES=(
   heka
   openheka
   aixagent
+  rsyslog
+  syslog-ng
   vector
 )
 #  filebeat

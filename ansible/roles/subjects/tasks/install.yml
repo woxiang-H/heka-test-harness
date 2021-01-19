@@ -18,6 +18,16 @@
     version: "{{ preinstalled_aixagent_version }}"
 
 - include_role:
+    name: rsyslog
+  vars:
+    action: install
+
+- include_role:
+    name: syslog-ng
+  vars:
+    action: install
+
+- include_role:
     name: vector
   vars:
     action: install

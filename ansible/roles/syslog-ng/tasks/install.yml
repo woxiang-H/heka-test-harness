@@ -1,0 +1,24 @@
+---
+- name: Install aliyun epel
+  get_url:
+    url: "http://mirrors.aliyun.com/repo/epel-7.repo"
+    dest: /etc/yum.repos.d/epel.repo 
+    mode: 0644
+
+- name: Install syslog-ng-330 repo
+  get_url:
+    url: "https://copr.fedorainfracloud.org/coprs/czanik/syslog-ng330/repo/epel-7/czanik-syslog-ng330-epel-7.repo"
+    dest: /etc/yum.repos.d/czanik-syslog-ng330-epel-7.repo
+    mode: 0644
+
+- name: Install syslog-ng
+  yum:
+    name: syslog-ng
+    state: present
+
+- name: Ensure the syslog-ng service is stopped
+  systemd:
+    name: syslog-ng
+    daemon_reload: yes
+    enabled: no
+    state: stopped

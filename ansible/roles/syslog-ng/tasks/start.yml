@@ -1,0 +1,6 @@
+---
+- name: Start the syslog-ng systemd service
+  systemd:
+    name: syslog-ng
+    daemon_reload: no
+    state: started

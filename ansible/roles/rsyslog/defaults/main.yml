@@ -1,0 +1,3 @@
+---
+configuration_file: config_files/rsyslog.conf
+pipeline_file: config_files/rsyslog-test.conf

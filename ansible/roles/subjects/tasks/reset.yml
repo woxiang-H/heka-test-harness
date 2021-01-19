@@ -48,3 +48,13 @@
     name: aixagent
   vars:
     action: reset
+
+- include_role:
+    name: rsyslog
+  vars:
+    action: reset
+
+- include_role:
+    name: syslog-ng
+  vars:
+    action: reset

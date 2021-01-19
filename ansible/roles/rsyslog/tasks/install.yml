@@ -1,0 +1,12 @@
+---
+- name: Install Rsyslog
+  yum:
+    name: rsyslog
+    state: present
+
+- name: Ensure the rsyslog service is stopped
+  systemd:
+    name: rsyslog
+    daemon_reload: yes
+    enabled: no
+    state: stopped

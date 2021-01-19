@@ -38,6 +38,12 @@
     - role: openheka
       action: configure
 
+    - role: rsyslog
+      action: configure
+
+    - role: syslog-ng
+      action: configure
+
   tasks:
     - name: "Create {{ test_file_count }} test log files"
       include_role:

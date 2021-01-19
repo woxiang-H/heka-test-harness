@@ -1,0 +1,7 @@
+---
+- name: Install syslog-ng configuration files
+  template:
+    src: "{{ configuration_file }}"
+    dest: "/etc/syslog-ng/syslog-ng.conf"
+    mode: 0644
+  when: configuration_file !=""
