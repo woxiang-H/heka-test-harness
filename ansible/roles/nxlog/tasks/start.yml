@@ -1,0 +1,12 @@
+---
+- name: Start the nxlog systemd service
+  systemd:
+    name: nxlog
+    daemon_reload: no
+    state: started
+
+- name: Restart the nxlog systemd service
+  systemd:
+    name: nxlog
+    daemon_reload: no
+    state: restarted

@@ -1,0 +1,7 @@
+---
+- name: Install nxlog settings configuration
+  template:
+    src: "{{ configuration_file }}"
+    dest: /etc/nxlog.conf
+    mode: 0644
+  when: configuration_file != ""

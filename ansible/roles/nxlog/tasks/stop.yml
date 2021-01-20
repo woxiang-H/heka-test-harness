@@ -1,0 +1,6 @@
+---
+- name: Stop the nxlog systemd service
+  systemd:
+    name: nxlog
+    daemon_reload: no
+    state: stopped

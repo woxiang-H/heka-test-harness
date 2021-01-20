@@ -1,0 +1,26 @@
+---
+- name: Downloading nxlog-ce-{{ version }}-1_rhel7.x86_64.rpm file to remote machine
+  get_url:
+    url: "https://nxlog.co/system/files/products/files/348/nxlog-ce-{{ version }}-1_rhel7.x86_64.rpm"
+    dest: /tmp/nxlog-ce.rpm
+    mode: 0644
+
+- name: Install nxlog-ce need apr
+  yum:
+    name: apr
+    state: present
+
+- name: Install nxlog-ce.rpm
+  shell: rpm -i /tmp/nxlog-ce.rpm --nodeps --force
+
+- name: Remove nxlog-ce archive
+  file:
+    path: /tmp/nxlog-ce.rpm
+    state: absent
+
+- name: Ensure the nxlog service is stopped
+  systemd:
+    name: nxlog
+    daemon_reload: yes
+    enabled: no
+    state: stopped

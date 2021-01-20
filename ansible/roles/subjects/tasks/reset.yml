@@ -58,3 +58,8 @@
     name: syslog-ng
   vars:
     action: reset
+
+- include_role:
+    name: nxlog
+  vars:
+    action: reset

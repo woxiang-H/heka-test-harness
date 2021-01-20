@@ -13,6 +13,7 @@ TEST_SUBJECT_NAMES=(
   aixagent
   rsyslog
   syslog-ng
+  nxlog
   vector
 )
 #  filebeat

@@ -44,6 +44,9 @@
     - role: syslog-ng
       action: configure
 
+    - role: nxlog
+      action: configure
+
   tasks:
     - name: "Create {{ test_file_count }} test log files"
       include_role:

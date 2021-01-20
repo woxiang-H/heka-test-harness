@@ -18,6 +18,12 @@
     version: "{{ preinstalled_aixagent_version }}"
 
 - include_role:
+    name: nxlog
+  vars:
+    action: install
+    version: "{{ preinstalled_nxlog_version }}"
+
+- include_role:
     name: rsyslog
   vars:
     action: install
