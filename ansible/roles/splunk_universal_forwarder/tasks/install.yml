@@ -10,7 +10,7 @@
 
 - name: "Downloading Splunk Universal Forwarder ({{ version }})"
   get_url:
-    url: "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version={{ version }}&product=universalforwarder&filename=splunkforwarder-{{ version_with_hash }}-linux-2.6-x86_64.rpm&wget=true"
+    url: "https://download.splunk.com/products/universalforwarder/releases/{{ version }}/linux/splunkforwarder-{{ version_with_hash }}-linux-2.6-x86_64.rpm"
     dest: /tmp/splunk_universal_forwarder.rpm
     mode: 0644
 

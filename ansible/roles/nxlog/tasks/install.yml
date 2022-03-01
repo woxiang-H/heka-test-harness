@@ -4,6 +4,7 @@
     url: "https://nxlog.co/system/files/products/files/348/nxlog-ce-{{ version }}-1_rhel7.x86_64.rpm"
     dest: /tmp/nxlog-ce.rpm
     mode: 0644
+    validate_certs: no
 
 - name: Install nxlog-ce need apr
   yum:

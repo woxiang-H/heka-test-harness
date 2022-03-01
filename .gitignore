@@ -10,5 +10,5 @@
 .env
 .terraform
 tmp/
-ansible/roles/heka/files/heka-3_6_0.4-linux-amd64.tar.gz
-ansible/roles/aixagent/files/rizhiyi-agent-3.2.0.3.tar.gz
+ansible/roles/heka/files/heka-4_1_0.4-linux-amd64.tar.gz
+ansible/roles/aixagent/files/rizhiyi-agent-3.2.0.6.tar.gz

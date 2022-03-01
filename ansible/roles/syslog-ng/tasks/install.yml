@@ -10,6 +10,7 @@
     url: "https://copr.fedorainfracloud.org/coprs/czanik/syslog-ng330/repo/epel-7/czanik-syslog-ng330-epel-7.repo"
     dest: /etc/yum.repos.d/czanik-syslog-ng330-epel-7.repo
     mode: 0644
+    validate_certs: no
 
 - name: Install syslog-ng
   yum:
