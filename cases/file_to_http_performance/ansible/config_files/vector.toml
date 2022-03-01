@@ -1,15 +1,14 @@
 [sources.in]
   type               = "file"
   include            = ["{{ test_files_root }}*.log"]
-  start_at_beginning = true
+  read_from          = "beginning"
 
 [sinks.out]
   inputs                  = ["in"]
   type                    = "http"
   uri                     = "http://{{ consumer_ip }}:{{ consumer_port }}"
-  encoding                = "ndjson"
-  batch.max_size          = 102400 # 100kib
+  encoding.codec                = "ndjson"
+  batch.max_bytes          = 102400 # 100kib
   batch.timeout_secs      = 5
-  request.in_flight_limit = 10000
   request.rate_limit_num  = 10000
 
