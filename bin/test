@@ -4,6 +4,7 @@ set -euo pipefail
 # Init lib.
 # shellcheck source=SCRIPTDIR/../lib/vector-test-harness/init.sh
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)/../lib/vector-test-harness/init.sh"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)/../.envrc"
 
 #
 # Usage
@@ -361,6 +362,7 @@ END
 if [ "$RUN" == 'true' ]
 then
     $VECTOR_TEST_HARNESS_UTILS_DIR/compared /tmp/results/${TEST_NAME}/${TEST_CONFIGURATION}/${TEST_TIMESTAMP}
+    $VECTOR_TEST_HARNESS_UTILS_DIR/csvstore /tmp/results/${TEST_NAME}/${TEST_CONFIGURATION}/${TEST_TIMESTAMP} > /dev/null 2>&1
 fi
 
 print_divider

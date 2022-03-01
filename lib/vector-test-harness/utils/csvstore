@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/local/bin/python3.8
 import os, sys
 import pandas as pd
 import tabulate
@@ -88,6 +88,9 @@ if __name__ == "__main__":
     paths = sys.argv[1]
     list_subject = os.listdir(paths)
     data_csv = []
+    startime=os.path.basename(paths)
+    filetype=os.path.basename(os.path.dirname(paths))
+    task=os.path.basename(os.path.dirname(os.path.dirname(paths)))
     for subject in list_subject:
 #        print(subject)
         list_csv = []
@@ -95,14 +98,19 @@ if __name__ == "__main__":
         results = real_csv(list_csv[0])
         subject = build_short_subject_name(subject)
         results.insert(0, subject)
+        results.insert(0, filetype)
+        results.insert(0, task)
+        results.insert(0, startime)
         data_csv.append(results)
-    namecsv = ["Subject", "Disk Thrpt (avg)", "IO Thrpt (avg)", "Duration", "CPU sys (max)", "CPU usr (max)", "Load 1m (avg)", "Mem used (max)", "Disk read (sum)", "Disk writ (sum)", "Net recv (sum)", "Net send (sum)", "TCP estab (avg)", "TCP sync (avg)", "TCP close (avg)"]
+    namecsv = ["Startime", "Task", "Filetype", "Subject", "Disk Thrpt (avg)", "IO Thrpt (avg)", "Duration", "CPU sys (max)", "CPU usr (max)", "Load 1m (avg)", "Mem used (max)", "Disk read (sum)", "Disk writ (sum)", "Net recv (sum)", "Net send (sum)", "TCP estab (avg)", "TCP sync (avg)", "TCP close (avg)"]
     rendered = tabulate.tabulate(data_csv, headers=namecsv, tablefmt="pipe", numalign="right", stralign="right")
     print(rendered + "\n")
 #    data=list(map(list, zip(*data_csv)))
 #    data=pd.DataFrame(data, index=namecsv)
 #    newrend = tabulate.tabulate(data, headers="firstrow", tablefmt="pipe", numalign="left", stralign="left")
 #    print(newrend + "\n")
+    if not os.path.exists("/tmp/csvstore"):
+        os.makedirs("/tmp/csvstore")
     testfile = "/tmp/csvstore/"+os.path.basename(paths)+".csv"
     aaa = pd.DataFrame(columns=namecsv, data=data_csv)
     aaa.to_csv(testfile, index=0)
